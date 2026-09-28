@@ -1,0 +1,99 @@
+:root {
+  --telegram-blue: #2AABEE;
+  --telegram-blue-dark: #229ED9;
+  --background: #F4F6F8;
+  --card: #FFFFFF;
+  --text: #17212B;
+  --secondary-text: #7A8793;
+  --online: #4FAE4E;
+  --button: #40A7E3;
+  --button-hover: #3496D2;
+  --font: -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
+body {
+  min-height: 100vh; min-height: 100dvh;
+  display: flex; align-items: center; justify-content: center;
+  padding: max(16px, env(safe-area-inset-top)) 24px max(40px, env(safe-area-inset-bottom));
+  font-family: var(--font); color: var(--text);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  animation: fade .4s ease both;
+}
+/* Card do convite (todas as telas) */
+.invite {
+  width: 100%; max-width: 400px;
+  padding: 28px 22px 20px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid #E6EBEF; border-radius: 22px;
+  box-shadow: 0 0 0 1px rgba(42,171,238,.16), 0 8px 24px rgba(23,33,43,.06), 0 0 44px rgba(42,171,238,.26), 0 0 100px rgba(34,158,217,.16);
+  animation: rise .5s cubic-bezier(.2,.8,.2,1) both, glow 5s ease-in-out .5s infinite alternate;
+}
+/* Luz suave de fundo, atrás do card */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(520px 380px at 50% 46%, rgba(42,171,238,.20), transparent 70%),
+    radial-gradient(300px 240px at 78% 30%, rgba(125,211,252,.16), transparent 70%);
+}
+.avatar {
+  position: relative; width: 88px; height: 88px; margin: 0 auto 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--av1, #5CAFFA), var(--av2, #408ACF));
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(23,33,43,.14);
+  display: grid; place-items: center;
+  transition: transform .25s ease;
+}
+.avatar:hover { transform: scale(1.03); }
+.avatar img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: none; }
+.avatar.has-image img { display: block; }
+.avatar.has-image #avatarFallback { display: none; }
+#avatarFallback { color: #fff; font-size: 30px; font-weight: 600; }
+.online {
+  position: absolute; right: 1px; bottom: 1px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--online); border: 3px solid var(--card);
+}
+h1 { font-size: 24px; line-height: 1.2; font-weight: 600; }
+.members { margin-top: 2px; font-size: 15.5px; color: var(--secondary-text); }
+.desc {
+  margin: 10px auto 0; max-width: 32ch;
+  font-size: 15px; line-height: 1.4; color: var(--secondary-text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 48px; min-width: 240px; margin-top: 18px; padding: 0 28px;
+  border-radius: 12px;
+  background: var(--button); color: #fff; text-decoration: none;
+  font-size: 14.5px; font-weight: 600; letter-spacing: .06em;
+  box-shadow: 0 1px 4px rgba(64,167,227,.3);
+  transition: transform .12s ease, background .15s ease, box-shadow .15s ease;
+}
+.btn svg { transition: transform .2s ease; }
+.btn:hover { background: var(--button-hover); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: scale(.97); box-shadow: 0 1px 4px rgba(42,171,238,.3); }
+.btn:focus-visible { outline: 3px solid rgba(42,171,238,.4); outline-offset: 3px; }
+.btn.disabled { opacity: .5; pointer-events: none; }
+.hint { margin-top: 10px; font-size: 12.5px; color: var(--secondary-text); }
+.note {
+  position: fixed; left: 0; right: 0; bottom: max(10px, env(safe-area-inset-bottom));
+  text-align: center; font-size: 10.5px; color: #B4BEC7;
+}
+@keyframes glow {
+  from { box-shadow: 0 0 0 1px rgba(42,171,238,.14), 0 8px 24px rgba(23,33,43,.06), 0 0 34px rgba(42,171,238,.20), 0 0 80px rgba(34,158,217,.12); }
+  to   { box-shadow: 0 0 0 1px rgba(42,171,238,.28), 0 8px 24px rgba(23,33,43,.06), 0 0 56px rgba(42,171,238,.34), 0 0 120px rgba(34,158,217,.22); }
+}
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+@media (max-height: 520px) { .avatar { width: 72px; height: 72px; margin-bottom: 8px; } }
+@media (prefers-color-scheme: dark) {
+  :root { --background: #0E1621; --card: #17212B; --text: #F5F8FA; --secondary-text: #8FA3B5; }
+  .avatar { border-color: var(--card); }
+  .note { color: #4A5B6B; }
+  .invite { border-color: #243447; }
+}
+@media (prefers-reduced-motion: reduce) { *, body { animation: none !important; transition: none !important; } }
